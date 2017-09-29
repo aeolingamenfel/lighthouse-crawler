@@ -13,8 +13,6 @@ class SitePage {
         this.score = score;
 
         this.generateLoadScore();
-
-        console.log(`${this.url}: ${this.loadScore}`);
     }
 
     generateLoadScore() {

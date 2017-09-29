@@ -7,7 +7,7 @@ const SitePage = require("./SitePage.js");
 
 class LighthouseCrawler {
 
-    constructor(crawlLimit = 2) {
+    constructor(crawlLimit = 5) {
         this.crawler = null;
         this.linksQueued = false;
         this.crawledPages = {};
@@ -27,10 +27,11 @@ class LighthouseCrawler {
         });
 
         this.addCrawledPage(startUrl);
+
+        console.log("Beginning site crawl...");
     }
 
     crawlLoadedPage(error, result, $) {
-        console.log("nice");
 
         this.pageWasFound(result.request);
 
@@ -104,13 +105,21 @@ class LighthouseCrawler {
         console.log("Preparing to run tests on all crawled pages. Do not close or tamper with the Chrome window that will appear.");
 
         let testNumber = 1;
+        let pageScoreSum = 0;
 
         for(const index in this.crawledPages) {
             const page = this.crawledPages[index];
 
             console.log(`Testing page (${testNumber}/${this.crawledCount})`);
             await this.testPage(page);
+
+            pageScoreSum += page.loadScore;
+            testNumber += 1;
         }
+
+        const average = pageScoreSum / this.crawledCount;
+
+        console.log(`\nAverage Score: ${average}`);
 
         // clean up
         fs.unlinkSync("./temp.json");
@@ -120,6 +129,8 @@ class LighthouseCrawler {
         const score = await this.scorePage(page);
 
         page.didRecieveScore(score);
+
+        console.log(`${page.url}: ${page.loadScore}`);
     }
 
     async scorePage(page) {
