@@ -67,9 +67,9 @@ class LighthouseCrawler {
 
         if(newPage) {
             this.crawler.queue(url);
-        }
 
-        this.crawledCount += 1;
+            this.crawledCount += 1;
+        }
     }
 
     hasPage(url) {
