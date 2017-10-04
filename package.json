@@ -9,9 +9,13 @@
   "author": "Ivan Mattie",
   "license": "ISC",
   "dependencies": {
-    "node-webcrawler": "^0.8.0"
+    "node-webcrawler": "^0.8.0",
+    "really-simple-args": "^1.0.1"
   },
   "devDependencies": {
     "mocha": "^3.5.3"
+  },
+  "bin": {
+    "lighthouse-crawler": "./index.js"
   }
 }
