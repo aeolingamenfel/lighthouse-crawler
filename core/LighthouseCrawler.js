@@ -7,7 +7,7 @@ const SitePage = require("./SitePage.js");
 
 class LighthouseCrawler {
 
-    constructor(crawlLimit = 5) {
+    constructor(crawlLimit = 10) {
         this.crawler = null;
         this.linksQueued = false;
         this.crawledPages = {};
@@ -32,7 +32,6 @@ class LighthouseCrawler {
     }
 
     crawlLoadedPage(error, result, $) {
-
         this.pageWasFound(result.request);
 
         const links = $("a");
@@ -47,6 +46,10 @@ class LighthouseCrawler {
     }
 
     queueLinks(links) {
+        if(this.crawledCount >= this.crawlLimit) {
+            return;
+        }
+
         for(let x = 0; x < links.length; x++) {
             const link = links[x];
             const url = link.attribs.href;
@@ -80,12 +83,20 @@ class LighthouseCrawler {
             return false;
         }
 
+        if(this.isBadUrl(url)) {
+            return false;
+        }
+
         const truncatedUrl = this.truncateUrl(url);
         const page = new SitePage(truncatedUrl, url);
 
         this.crawledPages[truncatedUrl] = page;
 
         return page;
+    }
+
+    isBadUrl(url) {
+        return /^(?:(?:(?:mailto)|(?:tel))[:])|(#)/.test(url);
     }
 
     truncateUrl(url) {

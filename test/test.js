@@ -86,4 +86,68 @@ describe('LighthouseCrawler', function() {
             }
         });
     });
+
+    describe(".isBadUrl()", function() {
+        let crawler = new LighthouseCrawler();
+
+        it("should detect telephone links", function() {
+            const urls = {
+                "tel:nice": true,
+                "tel:+1123423": true,
+                "tel:43204902": true,
+                "tel:(123) 456-7890": true,
+                "tel:+18886946735": true
+            };
+
+            for(const index in urls) {
+                const correctAnswer = urls[index];
+
+                assert.equal(correctAnswer, crawler.isBadUrl(index),
+                    `did not correctly return ${correctAnswer} for ${index}`);
+            }
+        });
+
+        it("should detect email links", function() {
+            const urls = {
+                "mailto:": true,
+                "mailto:test@test.com": true,
+                "mailto:foobar": true,
+                "mailto:foo.bar@gmail.com": true
+            };
+
+            for(const index in urls) {
+                const correctAnswer = urls[index];
+
+                assert.equal(correctAnswer, crawler.isBadUrl(index),
+                    `did not correctly return ${correctAnswer} for ${index}`);
+            }
+        });
+
+        it("should not detect normal urls", function() {
+            const urls = {
+                "http://test.com": false,
+                "https://test.com": false
+            };
+
+            for(const index in urls) {
+                const correctAnswer = urls[index];
+
+                assert.equal(correctAnswer, crawler.isBadUrl(index),
+                    `did not correctly return ${correctAnswer} for ${index}`);
+            }
+        });
+
+        it("should detect hashes (#) as the URL base", function() {
+            const urls = {
+                "#": true
+            };
+
+            for(const index in urls) {
+                const correctAnswer = urls[index];
+
+                assert.equal(correctAnswer, crawler.isBadUrl(index),
+                    `did not correctly return ${correctAnswer} for ${index}`);
+            }
+        });
+    });
 });
