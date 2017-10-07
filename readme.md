@@ -2,7 +2,29 @@
 
 Simple CLI to crawl a website/webapp and perform Lighthouse tests.
 
-*WIP*
+*This is a WIP*
+
+---
+
+  - [Installation](#installation)
+  - [Legal](#legal)
+    - [Lighthouse](#lighthouse)
+
+## Installation
+
+To install, simply install the `lighthouse-crawler` package globally with NPM:
+
+```CLI
+npm i -g lighthouse-crawler
+```
+
+## Usage
+
+To run, simply call `lighthouse-crawler` with the URL to start at.
+
+```CLI
+lighthouse-crawler https://www.example.tld
+```
 
 ## Legal
 
