@@ -1,5 +1,7 @@
 # Lighthouse Crawler CLI
 
+[![npm version](https://badge.fury.io/js/lighthouse-crawler.svg)](https://badge.fury.io/js/lighthouse-crawler)
+
 Simple CLI to crawl a website/webapp and perform Lighthouse tests.
 
 *This is a WIP*
@@ -7,6 +9,7 @@ Simple CLI to crawl a website/webapp and perform Lighthouse tests.
 ---
 
   - [Installation](#installation)
+  - [Usage](#usage)
   - [Legal](#legal)
     - [Lighthouse](#lighthouse)
 
